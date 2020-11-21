@@ -1,114 +1,82 @@
-=== Plugin Name ===
-Contributors: (this should be a list of wordpress.org userid's)
-Donate link: https://www.ohack.org/
-Tags: comments, spam
-Requires at least: 3.0.1
-Tested up to: 3.4
-Stable tag: 4.3
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+<?php
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+/**
+ * Written by Team-13 for Dress for Success San Jose via Opportunity Hack (https://ohack.org) 11/20/2020
+ *
+ * This file is read by WordPress to generate the plugin information in the plugin
+ * admin area. This file also includes all of the dependencies used by the plugin,
+ * registers the activation and deactivation functions, and defines a function
+ * that starts the plugin.
+ *
+ * @link              https://www.ohack.org/
+ * @since             0.1.0
+ * @package           Dfss_Ohack
+ *
+ * @wordpress-plugin
+ * Plugin Name:       Donation Receipts Generator & Validator for DFSS
+ * Plugin URI:        https://github.com/2020-opportunity-hack/Team-13
+ * Description:       This plugin will add features to My Account page for registered Users to Generate donation reciepts and download them as needed. The NPO members can validate the recipt and make it avilable to download from WordPress backend.
+ * Version:           0.1.0
+ * Author:            OHACK#TEAM13
+ * Author URI:        https://www.ohack.org/
+ * License:           GPL-2.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain:       dfss-ohack
+ * Domain Path:       /languages
+ */
 
-== Description ==
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+/**
+ * Currently plugin version.
+ * Start at version 1.0.0 and use SemVer - https://semver.org
+ * Rename this for your plugin and update it as you release new versions.
+ */
+define( 'DFSS_OHACK_VERSION', '1.0.0' );
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+/**
+ * The code that runs during plugin activation.
+ * This action is documented in includes/class-dfss-ohack-activator.php
+ */
+function activate_dfss_ohack() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-dfss-ohack-activator.php';
+	Dfss_Ohack_Activator::activate();
+}
 
-A few notes about the sections above:
+/**
+ * The code that runs during plugin deactivation.
+ * This action is documented in includes/class-dfss-ohack-deactivator.php
+ */
+function deactivate_dfss_ohack() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-dfss-ohack-deactivator.php';
+	Dfss_Ohack_Deactivator::deactivate();
+}
 
-*   "Contributors" is a comma separated list of wp.org/wp-plugins.org usernames
-*   "Tags" is a comma separated list of tags that apply to the plugin
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
-higher versions... this is just the highest one you've verified.
-*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
-stable.
+register_activation_hook( __FILE__, 'activate_dfss_ohack' );
+register_deactivation_hook( __FILE__, 'deactivate_dfss_ohack' );
 
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
-if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
-for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
-is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
-your in-development version, without having that information incorrectly disclosed about the current stable version
-that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
+/**
+ * The core plugin class that is used to define internationalization,
+ * admin-specific hooks, and public-facing site hooks.
+ */
+require plugin_dir_path( __FILE__ ) . 'includes/class-dfss-ohack.php';
 
-    If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
-you put the stable version, in order to eliminate any doubt.
+/**
+ * Begins execution of the plugin.
+ *
+ * Since everything within the plugin is registered via hooks,
+ * then kicking off the plugin from this point in the file does
+ * not affect the page life cycle.
+ *
+ * @since    0.1.0
+ */
+function run_dfss_ohack() {
 
-== Installation ==
+	$plugin = new Dfss_Ohack();
+	$plugin->run();
 
-This section describes how to install the plugin and get it working.
-
-e.g.
-
-1. Upload `dfss-ohack.php` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
-
-== Frequently Asked Questions ==
-
-= A question that someone might have =
-
-An answer to that question.
-
-= What about foo bar? =
-
-Answer to foo bar dilemma.
-
-== Screenshots ==
-
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
-
-== Changelog ==
-
-= 1.0 =
-* A change since the previous version.
-* Another change.
-
-= 0.5 =
-* List versions from most recent at top to oldest at bottom.
-
-== Upgrade Notice ==
-
-= 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
-
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
-
-== Arbitrary section ==
-
-You may provide arbitrary sections, in the same format as the ones above.  This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation."  Arbitrary sections will be shown below the built-in sections outlined above.
-
-== A brief Markdown Example ==
-
-Ordered list:
-
-1. Some feature
-1. Another feature
-1. Something else about the plugin
-
-Unordered list:
-
-* something
-* something else
-* third thing
-
-Here's a link to [WordPress](http://wordpress.org/ "Your favorite software") and one to [Markdown's Syntax Documentation][markdown syntax].
-Titles are optional, naturally.
-
-[markdown syntax]: http://daringfireball.net/projects/markdown/syntax
-            "Markdown is what the parser uses to process much of the readme file"
-
-Markdown uses email style notation for blockquotes and I've been told:
-> Asterisks for *emphasis*. Double it up  for **strong**.
-
-`<?php code(); // goes in backticks ?>`
+}
+run_dfss_ohack();
