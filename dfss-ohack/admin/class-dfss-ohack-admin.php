@@ -100,4 +100,45 @@ class Dfss_Ohack_Admin {
 
 	}
 
+	public function admin_donation_receipt_page() {
+		return "<h2>O H A C K</h2>";
+	}
+	
+	public function actions_admin_donation_receipt_menu() {
+		$page_title = 'Donation Receipts';
+		$menu_title = 'UD Receipts';
+		$capability = 'manage_options';
+		$menu_slug = 'donations-receipts';
+		$icon_url = 'dashicons-chart-area';
+		$position = 10;
+		add_menu_page( $page_title, $menu_title, $capability, $menu_slug, 'admin_donation_receipt_page', $icon_url, $position);
+	}
+
+	function custom_post_donation_receipts() {
+		$labels = array(
+		  'name'               => _x( 'Receipts', 'post type general name' ),
+		  'singular_name'      => _x( 'Receipt', 'post type singular name' ),
+		  'add_new'            => _x( 'Add New', 'book' ),
+		  'add_new_item'       => __( 'Add New Receipt' ),
+		  'edit_item'          => __( 'Edit Receipt' ),
+		  'new_item'           => __( 'New Receipt' ),
+		  'all_items'          => __( 'All Receipts' ),
+		  'view_item'          => __( 'View Receipt' ),
+		  'search_items'       => __( 'Search Receipts' ),
+		  'not_found'          => __( 'No receipts found' ),
+		  'not_found_in_trash' => __( 'No Receipt found in the Trash' ), 
+		  'parent_item_colon'  => "’",
+		  'menu_name'          => 'Receipts'
+		);
+		$args = array(
+		  'labels'        => $labels,
+		  'description'   => 'Holds our receipts and receipt specific data',
+		  'public'        => true,
+		  'menu_position' => 5,
+		  'supports'      => array( 'title', 'editor', 'thumbnail', 'excerpt', 'comments' ),
+		  'has_archive'   => true,
+		);
+		register_post_type( 'receipt', $args ); 
+	}
+
 }

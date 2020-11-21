@@ -14,3 +14,13 @@
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
+<?php
+
+
+
+//add_action('admin_menu', 'actions_admin_donation_receipt_menu');
+
+echo 123;
+
+?>
+123456
