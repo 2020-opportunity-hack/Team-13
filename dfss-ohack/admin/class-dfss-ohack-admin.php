@@ -141,4 +141,23 @@ class Dfss_Ohack_Admin {
 		register_post_type( 'receipt', $args ); 
 	}
 
+	function receipt_meta_box() {
+		add_meta_box( 
+			'receipt_author',
+			'User', //'__( 'Product Price', 'myplugin_textdomain' ),'
+			'receipt_author_box_content',
+			'receipt',
+			'side',
+			'high'
+		);
+		add_meta_box( 
+			'is_approved',
+			'Approval Status', //'__( 'Product Price', 'myplugin_textdomain' ),'
+			'approved_box_content',
+			'receipt',
+			'side',
+			'high'
+		);
+	}
+
 }

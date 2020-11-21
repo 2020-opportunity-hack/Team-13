@@ -159,6 +159,7 @@ class Dfss_Ohack {
 
 		$this->loader->add_action('admin_menu', $plugin_admin, 'actions_admin_donation_receipt_menu');
 		$this->loader->add_action('init', $plugin_admin, 'custom_post_donation_receipts');
+		$this->loader->add_action('add_meta_boxes', $plugin_admin, 'receipt_meta_box');
 
 	}
 
