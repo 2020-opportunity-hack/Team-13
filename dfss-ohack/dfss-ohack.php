@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              https://www.ohack.org/
- * @since             1.0.0
+ * @since             0.1.0
  * @package           Dfss_Ohack
  *
  * @wordpress-plugin
  * Plugin Name:       Donation Receipts Generator & Validator for DFSS
  * Plugin URI:        https://github.com/2020-opportunity-hack/Team-13
  * Description:       This plugin will add features to My Account page for registered Users to Generate donation reciepts and download them as needed. The NPO members can validate the recipt and make it avilable to download from WordPress backend.
- * Version:           0.1.1
+ * Version:           0.1.0
  * Author:            OHACK#TEAM13
  * Author URI:        https://www.ohack.org/
  * License:           GPL-2.0+
@@ -71,7 +71,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-dfss-ohack.php';
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.0.0
+ * @since    0.1.0
  */
 function run_dfss_ohack() {
 
