@@ -1,7 +1,7 @@
 <?php
 
 /**
- * The plugin bootstrap file
+ * Written by Team-13 for Dress for Success San Jose via Opportunity Hack (https://ohack.org) 11/20/2020
  *
  * This file is read by WordPress to generate the plugin information in the plugin
  * admin area. This file also includes all of the dependencies used by the plugin,
@@ -13,10 +13,10 @@
  * @package           Dfss_Ohack
  *
  * @wordpress-plugin
- * Plugin Name:       DFSS-OHACK
+ * Plugin Name:       Donation Receipts Generator & Validator for DFSS
  * Plugin URI:        https://github.com/2020-opportunity-hack/Team-13
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
- * Version:           1.0.0
+ * Description:       This plugin will add features to My Account page for registered Users to Generate donation reciepts and download them as needed. The NPO members can validate the recipt and make it avilable to download from WordPress backend.
+ * Version:           0.1.1
  * Author:            OHACK#TEAM13
  * Author URI:        https://www.ohack.org/
  * License:           GPL-2.0+
