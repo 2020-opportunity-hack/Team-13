@@ -1,5 +1,5 @@
-Dress for Success San Jose<br/>
-Problem Statement<br/>
+<b>Dress for Success San Jose</b><br/>
+<i>Problem Statement</i><br/>
 The mission of 'Dress for Success San Jose' is to empower women to achieve economic independence by providing a network of support, professional attire, and development tools to help women thrive in work and life. 
 <br/><br/>
 Scenario<br/>
