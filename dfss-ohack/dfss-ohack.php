@@ -37,46 +37,106 @@ if ( ! defined( 'WPINC' ) ) {
  */
 define( 'DFSS_OHACK_VERSION', '1.0.0' );
 
-/**
- * The code that runs during plugin activation.
- * This action is documented in includes/class-dfss-ohack-activator.php
- */
-function activate_dfss_ohack() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-dfss-ohack-activator.php';
-	Dfss_Ohack_Activator::activate();
+function admin_donation_receipt_page() {
+	return "<h2>O H A C K</h2>";
 }
 
-/**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-dfss-ohack-deactivator.php
- */
-function deactivate_dfss_ohack() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-dfss-ohack-deactivator.php';
-	Dfss_Ohack_Deactivator::deactivate();
+function actions_admin_donation_receipt_menu() {
+	$page_title = 'Donation Receipts';
+	$menu_title = 'UD Receipts';
+	$capability = 'manage_options';
+	$menu_slug = 'donations-receipts';
+	$icon_url = 'dashicons-chart-area';
+	$position = 10;
+	add_menu_page( $page_title, $menu_title, $capability, $menu_slug, 'admin_donation_receipt_page', $icon_url, $position);
 }
 
-register_activation_hook( __FILE__, 'activate_dfss_ohack' );
-register_deactivation_hook( __FILE__, 'deactivate_dfss_ohack' );
-
-/**
- * The core plugin class that is used to define internationalization,
- * admin-specific hooks, and public-facing site hooks.
- */
-require plugin_dir_path( __FILE__ ) . 'includes/class-dfss-ohack.php';
-
-/**
- * Begins execution of the plugin.
- *
- * Since everything within the plugin is registered via hooks,
- * then kicking off the plugin from this point in the file does
- * not affect the page life cycle.
- *
- * @since    0.1.0
- */
-function run_dfss_ohack() {
-
-	$plugin = new Dfss_Ohack();
-	$plugin->run();
-
+function custom_post_donation_receipts() {
+	$labels = array(
+	  'name'               => _x( 'Receipts', 'post type general name' ),
+	  'singular_name'      => _x( 'Receipt', 'post type singular name' ),
+	  'add_new'            => _x( 'Add New', 'book' ),
+	  'add_new_item'       => __( 'Add New Receipt' ),
+	  'edit_item'          => __( 'Edit Receipt' ),
+	  'new_item'           => __( 'New Receipt' ),
+	  'all_items'          => __( 'All Receipts' ),
+	  'view_item'          => __( 'View Receipt' ),
+	  'search_items'       => __( 'Search Receipts' ),
+	  'not_found'          => __( 'No receipts found' ),
+	  'not_found_in_trash' => __( 'No Receipt found in the Trash' ), 
+	  'parent_item_colon'  => "’",
+	  'menu_name'          => 'Receipts'
+	);
+	$args = array(
+	  'labels'        => $labels,
+	  'description'   => 'Holds our receipts and receipt specific data',
+	  'public'        => true,
+	  'menu_position' => 5,
+	  'supports'      => array( 'title', 'editor', 'thumbnail', 'excerpt', 'comments' ),
+	  'has_archive'   => true,
+	);
+	register_post_type( 'udr_receipt', $args ); 
 }
-run_dfss_ohack();
+
+function receipt_meta_box() {
+	add_meta_box( 
+		'udr_receipt_author',
+		'User', //'__( 'Product Price', 'myplugin_textdomain' ),'
+		'receipt_author_box_content',
+		'receipt',
+		'side',
+		'low'
+	);
+	add_meta_box( 
+		'udr_uid',
+		'Unique ID', //'__( 'Product Price', 'myplugin_textdomain' ),'
+		'uid_box_content',
+		'receipt',
+		'side',
+		'low'
+	);
+	add_meta_box( 
+		'udr_is_approved',
+		'Approval Status', //'__( 'Product Price', 'myplugin_textdomain' ),'
+		'approved_box_content',
+		'receipt',
+		'side',
+		'low'
+	);
+	add_meta_box( 
+		'udr_datetime',
+		'Date', //'__( 'Product Price', 'myplugin_textdomain' ),'
+		'dr_datetime_box_content',
+		'receipt',
+		'side',
+		'low'
+	);
+}
+
+
+function udr_donation_form() {
+	// $form_html = "<h3>Donation Details</h3>";
+	// include('dr-form.php');
+	// return $form_html;
+
+	ob_start();
+    require_once ( 'dr-form.php');
+    $content = ob_get_clean();
+    return $content;
+}
+
+function udr_shortcodes() {
+	add_shortcode('udr-donation-form', 'udr_donation_form');
+}
+
+function plugin_loader() {
+	add_shortcode('udr-donation-form', 'udr_donation_form');
+
+	add_action('admin_menu', 'actions_admin_donation_receipt_menu');
+	add_action('init', 'custom_post_donation_receipts');
+	add_action('add_meta_boxes', 'receipt_meta_box');
+}
+
+//execute
+include_once('dr-form-handler.php');
+plugin_loader();
