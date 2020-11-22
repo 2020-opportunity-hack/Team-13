@@ -72,8 +72,9 @@ function custom_post_donation_receipts() {
 	  'description'   => 'Holds our receipts and receipt specific data',
 	  'public'        => true,
 	  'menu_position' => 5,
-	  'supports'      => array( 'title', 'editor', 'thumbnail', 'excerpt', 'comments' ),
+	  //'supports'      => array( 'title', 'editor', 'thumbnail', 'excerpt', 'comments' ),
 	  'has_archive'   => true,
+	  'publicly_queryable' => true,
 	);
 	register_post_type( 'udr_receipt', $args ); 
 }
@@ -129,14 +130,26 @@ function udr_shortcodes() {
 	add_shortcode('udr-donation-form', 'udr_donation_form');
 }
 
+function udr_resources() {
+    wp_enqueue_style('bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
+    wp_enqueue_script('popper-js', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js');
+    wp_enqueue_script( 'bootstrap-js', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', array('jquery'), '3.2.1', true );
+}
+add_action('wp_enqueue_scripts', 'udr_resources');
+
 function plugin_loader() {
 	add_shortcode('udr-donation-form', 'udr_donation_form');
+	add_shortcode('list-user-donations', 'list_user_donations');
 
 	add_action('admin_menu', 'actions_admin_donation_receipt_menu');
 	add_action('init', 'custom_post_donation_receipts');
-	add_action('add_meta_boxes', 'receipt_meta_box');
+	// add_action('add_meta_boxes', 'receipt_meta_box');
+	flush_rewrite_rules( false );
 }
 
+global $unique_id;
 //execute
 include_once('dr-form-handler.php');
+include_once('udr-list-user-donations.php');
 plugin_loader();
+?>

@@ -1,11 +1,18 @@
 <?php // Silence is golden
 //$logo = plugin_dir_url( __FILE__ ) . 'assets/dfs-san-jose.jpg'
-?>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+if(isset($_POST['udr_donor_name'])) {
+    global $unique_id;
+?>
+    <div style="text-align: center">
+        <h3>Donation Tag: <?php echo $unique_id; ?></h3>
+        <h4>Thank you! Your record is submitted. Please drop the donations at Dress for Success with this tag. We'll notify you once your receipt is available to download.</h4>
+        <hr />
+        <button onClick="window.location.reload(); class="btn btn-primary btn-lg">Donate again</button>
+    </style>
+<?php
+} else {
+?>
 
 <form method="post">
     <div class="form-group">
@@ -33,7 +40,7 @@
     </div>
     <div class="form-group col-md-6">
       <label for="inputState">State</label>
-      <select name="udr_donor_address_state" class="form-control" required id="inputState">
+      <select name="udr_donor_address_state" class="form-control" required id="inputState" style=" height: 2.6em; font-size: 1em; ">
         <option value="AL">Alabama</option>
         <option value="AK">Alaska</option>
         <option value="AZ">Arizona</option>
@@ -93,7 +100,7 @@
     </div>
   </div>
   <div class="form-row">
-    <h5>Donations:</h5>
+    <b>With your donations of:</b>
   </div>
   <div class="form-row">
     <div class="form-group col-md-6">
@@ -104,7 +111,7 @@
       <label for="inputCity">Separates (blouse, pants, blazers, etc.)</label>
       <input name="udr_donor_donation_separates" type="text" class="form-control" required>
     </div>
-<div>
+</div>
 <div class="form-row">
     <div class="form-group col-md-6">
       <label for="inputCity">Shoes</label>
@@ -114,7 +121,7 @@
       <label for="inputCity">Other</label>
       <input name="udr_donor_donation_other" type="text" class="form-control" required>
     </div>
-<div>
+</div>
 <div class="form-row">
     <div class="form-group">
         <label for="inputWorth">Estimated Worth:</label>
@@ -130,3 +137,6 @@
   
   
 </form>
+<?php
+}
+?>
