@@ -13,7 +13,7 @@
  * @package           Dfss_Ohack
  *
  * @wordpress-plugin
- * Plugin Name:       Donation Receipts Generator & Validator for DFSS
+ * Plugin Name:       Touchless Donation & Tax Receipt - Approval & Tracker
  * Plugin URI:        https://github.com/2020-opportunity-hack/Team-13
  * Description:       This plugin will add features to My Account page for registered Users to Generate donation reciepts and download them as needed. The NPO members can validate the recipt and make it avilable to download from WordPress backend.
  * Version:           0.1.0
@@ -48,7 +48,7 @@ function actions_admin_donation_receipt_menu() {
 	$menu_slug = 'donations-receipts';
 	$icon_url = 'dashicons-chart-area';
 	$position = 10;
-	add_menu_page( $page_title, $menu_title, $capability, $menu_slug, 'admin_donation_receipt_page', $icon_url, $position);
+	//add_menu_page( $page_title, $menu_title, $capability, $menu_slug, 'admin_donation_receipt_page', $icon_url, $position);
 }
 
 function custom_post_donation_receipts() {
@@ -71,12 +71,16 @@ function custom_post_donation_receipts() {
 	  'labels'        => $labels,
 	  'description'   => 'Holds our receipts and receipt specific data',
 	  'public'        => true,
-	  'menu_position' => 5,
+	  'menu_position' => 3,
 	  //'supports'      => array( 'title', 'editor', 'thumbnail', 'excerpt', 'comments' ),
 	  'has_archive'   => true,
 	  'publicly_queryable' => true,
+	  'menu_icon'          => 'dashicons-images-alt2',
+	  'show_ui'            => true,
+	  'rewrite'            => array( 'slug' => 'udr_receipt' ),
 	);
 	register_post_type( 'udr_receipt', $args ); 
+	flush_rewrite_rules();
 }
 
 function receipt_meta_box() {
@@ -135,7 +139,14 @@ function udr_resources() {
     wp_enqueue_script('popper-js', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js');
     wp_enqueue_script( 'bootstrap-js', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', array('jquery'), '3.2.1', true );
 }
-add_action('wp_enqueue_scripts', 'udr_resources');
+
+function udr_receipt_post_template($single) {
+    global $post;
+    if ( $post->post_type == 'udr_receipt' ) {
+        return dirname( __FILE__ ) . '/single-udr_receipt.php';
+    }
+    return $single;
+}
 
 function plugin_loader() {
 	add_shortcode('udr-donation-form', 'udr_donation_form');
@@ -143,13 +154,17 @@ function plugin_loader() {
 
 	add_action('admin_menu', 'actions_admin_donation_receipt_menu');
 	add_action('init', 'custom_post_donation_receipts');
+
+	add_action('wp_enqueue_scripts', 'udr_resources');
+	add_filter( 'single_template', 'udr_receipt_post_template' );
+
 	// add_action('add_meta_boxes', 'receipt_meta_box');
-	flush_rewrite_rules( false );
 }
 
 global $unique_id;
 //execute
 include_once('dr-form-handler.php');
 include_once('udr-list-user-donations.php');
+include_once('udr-admin-settings.php');
 plugin_loader();
 ?>

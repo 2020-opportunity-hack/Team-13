@@ -1,4 +1,4 @@
-<?php // Silence is golden
+<?php
 
 function get_user_donations() {
     $args = array(
@@ -17,10 +17,9 @@ function get_user_donations() {
 function list_user_donations() {
     $donations = get_user_donations();
     global $post;
-    print_r($donations);
     ?>
     <?php if($donations) : ?>
-        <table class="table table-hover">
+        <table class="table table-hover table-bordered">
             <thead>
                 <tr>
                     <th scope="col">Tag #</th>
@@ -39,7 +38,9 @@ function list_user_donations() {
                     <td><?php echo the_date(); ?></td>
                     <td>
                         <?php if(get_field( "udr_is_approved" )): ?>
-                            <button class="btn btn-lg">Download</button>
+                            <a href="<?php echo $post->guid; ?>">
+                                <button class="btn btn-lg">Download</button>
+                            </a>
                         <?php endif; ?>
                         <?php if(!get_field( "udr_is_approved" )): ?>
                             Processing
