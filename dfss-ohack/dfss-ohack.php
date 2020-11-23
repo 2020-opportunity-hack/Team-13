@@ -123,11 +123,15 @@ function udr_donation_form() {
 	// $form_html = "<h3>Donation Details</h3>";
 	// include('dr-form.php');
 	// return $form_html;
-
-	ob_start();
-    require_once ( 'dr-form.php');
-    $content = ob_get_clean();
-    return $content;
+	if ( !is_user_logged_in() ) {
+    	ob_start();
+        echo wp_login_form( 'echo=0' ) . wp_register( '', '', false );
+	} else {
+    	ob_start();
+        require_once ( 'dr-form.php');
+        $content = ob_get_clean();
+        return $content;
+	}
 }
 
 function udr_shortcodes() {
