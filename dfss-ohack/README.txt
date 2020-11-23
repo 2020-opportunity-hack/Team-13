@@ -1,82 +1,79 @@
-<?php
-
-/**
- * Written by Team-13 for Dress for Success San Jose via Opportunity Hack (https://ohack.org) 11/20/2020
- *
- * This file is read by WordPress to generate the plugin information in the plugin
- * admin area. This file also includes all of the dependencies used by the plugin,
- * registers the activation and deactivation functions, and defines a function
- * that starts the plugin.
- *
- * @link              https://www.ohack.org/
- * @since             0.1.0
- * @package           Dfss_Ohack
- *
- * @wordpress-plugin
- * Plugin Name:       Donation Receipts Generator & Validator for DFSS
- * Plugin URI:        https://github.com/2020-opportunity-hack/Team-13
- * Description:       This plugin will add features to My Account page for registered Users to Generate donation reciepts and download them as needed. The NPO members can validate the recipt and make it avilable to download from WordPress backend.
- * Version:           0.1.0
- * Author:            OHACK#TEAM13
- * Author URI:        https://www.ohack.org/
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       dfss-ohack
- * Domain Path:       /languages
- */
-
-// If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
-}
-
-/**
- * Currently plugin version.
- * Start at version 1.0.0 and use SemVer - https://semver.org
- * Rename this for your plugin and update it as you release new versions.
- */
-define( 'DFSS_OHACK_VERSION', '1.0.0' );
-
-/**
- * The code that runs during plugin activation.
- * This action is documented in includes/class-dfss-ohack-activator.php
- */
-function activate_dfss_ohack() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-dfss-ohack-activator.php';
-	Dfss_Ohack_Activator::activate();
-}
-
-/**
- * The code that runs during plugin deactivation.
- * This action is documented in includes/class-dfss-ohack-deactivator.php
- */
-function deactivate_dfss_ohack() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-dfss-ohack-deactivator.php';
-	Dfss_Ohack_Deactivator::deactivate();
-}
-
-register_activation_hook( __FILE__, 'activate_dfss_ohack' );
-register_deactivation_hook( __FILE__, 'deactivate_dfss_ohack' );
-
-/**
- * The core plugin class that is used to define internationalization,
- * admin-specific hooks, and public-facing site hooks.
- */
-require plugin_dir_path( __FILE__ ) . 'includes/class-dfss-ohack.php';
-
-/**
- * Begins execution of the plugin.
- *
- * Since everything within the plugin is registered via hooks,
- * then kicking off the plugin from this point in the file does
- * not affect the page life cycle.
- *
- * @since    0.1.0
- */
-function run_dfss_ohack() {
-
-	$plugin = new Dfss_Ohack();
-	$plugin->run();
-
-}
-run_dfss_ohack();
+=== Touchless Donation & Tax Receipt - Approval & Tracker ===
+Contributors: Opportunity Hack 2020 - Team#13
+Donate link: https://www.ohack.org/
+Tags: nonprofit, donation tracker, touchless donation system, tax receipt dispatcher, approval flow
+Requires at least: 4.3
+Tested up to: 5.5.3
+Stable tag: 0.1.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+This plugin built for the nonprofit "Dress for Success San Jones" at Opportunity Hack 2020 to increase efficiency in pandemic. 
+== Description ==
+Touchless Donation & Tax Receipt Tracker plugin allows organizations to aceept donations and dispatch receipt efficiently in the 
+pandemic situation by provideng donation tracking and approving flow (system) to bith donors and nonprofit members to communicate 
+and accomplish the good deeds.
+Touchless Donation & Tax Receipt Tracker plugin will give configurable and pluggable features to place the required components of 
+the flow in various place of the system which is already do exist at the nonprofit side.
+= Main Features =
+1. User can create donation requests from system. Each request will be assigned an Unique TAG. 
+2. Nonprofit can validate and approve the donations from the Plugin Backend.
+3. The PDF Receipts can be downloded directly by user from their donation requests after the nonprofit accepts/approves the donatoin.
+4. Nonprofit are allowed to update the donation request contents and updated the receipt as needed.
+5. The entire touchless chain is available from accepting the donation to dispatching the Tax Receipts. 
+= Pluggable Features: =
+6. The underlying user management system of WordPress will be used. No additional setup is required.
+7. Shortcode `[list-user-donations]` is available to populate the history of donations the user has made - This can be placed anywhere in the system.
+= Configurable Options =
+8. This plugin can be made avilable on demand as the nonprofit required - The easy to install/uninstall instruction is available below.
+9. Donation receipt will be generated via a HTML Template, Which can be effortlessly be updated from the WordPress/Plugin backend.
+10. Receipt PDFs are generated on-demand, Thus there is no space constraints in the server. Temporary data will be wiped as used. 
+A few notes about the sections above:
+*   "Contributors" is a comma separated list of wp.org/wp-plugins.org usernames
+*   "Tags" is a comma separated list of tags that apply to the plugin
+*   "Requires at least" is the lowest version that the plugin will work on
+*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
+higher versions... this is just the highest one you've verified.
+*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
+stable.
+== Installation ==
+This section describes how to install the plugin and get it working.
+1. Upload and Unzip `dfss-ohack.zip` to the `/wp-content/plugins/` directory.
+2. Activate the plugin through the 'Plugins' menu in WordPress.
+3. Update plugin options from WordPress Backend - Settings and Receipt Template.
+4. To uninstall this feature - uninstall the plugin from WordPress backend.
+== Frequently Asked Questions ==
+= How to update the receipt template? =
+Receipt template can be updated via plugin options which is available at "UDR Options" screen in WordPress backend. 
+Recept template is a HTML template with following Data variables: 
+{{donor}}, {{tag}}, {{email}}, {{phone}}, {{street}}, {{city}}, {{state}}, {{zip}}, {{suits}}, {{separates}}, {{shoes}}, {{other}}
+= How to identify donations and respective receipts which is raised within system? =
+Donations can be identified with unique TAG value assigned to them. List of donations are available at WordPress backend. 
+= How to validate and approve the donations? =
+Donation data can be updated via `Receipts` menu which is available at WordPress backend. After validating the donation goods - respective count should be updated and marked as approved.
+= When the donors can download the receipt? =
+Receipts will be available immediatley after the approval of staff and can be downloaded from Users account section. Receipts will be approved after filling the donation form and dropping the donations physically at NPO's place.
+== Screenshots ==
+* `screenshots/donation-form.png` - The pre designed donation form with required fields to generate the Tax receipt.
+* `screenshots/donation-list.png` - Front end donation list (user specific) generated via the shortcode `[list-user-donations]`.
+* `screenshots/donation-list-backend.png` - Backend donation list to be used to look up by the TAG.
+* `screenshots/donation-approval.png` - Backend form to update and approve the donation.
+* `screenshots/plugin-receipt-template.png` - HTML Template of receipt with Data variables. This will be used to generate the Tax receipt for user.
+== Changelog ==
+= 0.1.0 =
+* This version developed at Opportunity Hack 2020 (ohack.org).
+* This version has a Plugin with Shortcodes and Receipt PDF generator with Donation Tracker/Approval flow.
+== From the Dress for Success San Jose for Oppotunity Hack 2020 ==
+= Problem Statement =
+The mission of 'Dress for Success San Jose' is to empower women to achieve economic independence by providing a network of support, professional attire, and development tools to help women thrive in work and life. 
+= Scenario =
+I am Jane, a professional woman who likes to buy nice clothes, shoes, and accessories. I am now retired and looking to donate my work wardrobe to Dress for Success San Jose. The clothes will help women in need of professional attire. After I have donated, completing the tax receipt is time-consuming, outdated, and cumbersome. I also want to donate money in addition to my clothes, but the whole process takes 15 minutes. This makes me hesitant and resistant to donate clothing and money. I am trying to improve the lives of women that are served by Dress for Success San Jose.
+How might we make it easy for Jane to pre-complete the tax receipt and add her monetary donation on her own before dropping off her donations?
+How might we see and recognize donors at the time of donation? 
+= Impact =
+Having an online tax receipt will enable donors to drop off faster and increase our community support. Staff time will be utilized more efficiently and directed towards helping more clients. 
+>> Our solution covers 100% of the impact and provides more with Tracking and Approval process. <<
+Useul Links:
+https://www.ohack.org/hackathon/non-profits#h.65jtncwhacyq
+https://github.com/2020-opportunity-hack/Team-13
+https://www.ohack.org/
+https://sanjose.dressforsuccess.org/
