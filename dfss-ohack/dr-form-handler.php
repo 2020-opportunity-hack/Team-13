@@ -5,7 +5,7 @@ global $unique_id;
 function handle_donor_form_submit() {
     if(isset($_POST['udr_donor_name'])) {
         $c_user_id = get_current_user_id();
-        echo '<script>alert("'.$c_user_id.'");</script>';
+        //echo '<script>alert("'.$c_user_id.'");</script>';
 
         // include_once('udr_receipt_template.php');
         $unique_id = "DR" . current_time( 'ymd', true ) . $c_user_id . rand( 111, 999 );
